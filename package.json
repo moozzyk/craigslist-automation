@@ -20,5 +20,8 @@
     "@tsconfig/node16": "^1.0.3",
     "@types/node": "^18.11.0",
     "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "puppeteer": "^19.0.0"
   }
 }
