@@ -1,5 +1,22 @@
 import * as puppeteer from "puppeteer";
 
+const zipRegex = /^\d{5}$/;
+
+const rewriteMap = new Map<
+  string,
+  (val: string | number | boolean) => string
+>();
+rewriteMap.set("purveyor", (val) => `purveyor=${val}`);
+rewriteMap.set("query", (val) => `query=${encodeURIComponent(val)}`);
+rewriteMap.set("searchTitlesOnly", (val) => (val ? "srchType=T" : ""));
+rewriteMap.set("hasImage", (val) => (val ? "hasPic=1" : ""));
+rewriteMap.set("postedToday", (val) => (val ? "postedToday=1" : ""));
+rewriteMap.set("hideDuplicates", (val) => (val ? "bundleDuplicates=1" : ""));
+rewriteMap.set("milesFromLocation", (val) => `searchDistance=${val}`);
+rewriteMap.set("zipCode", (val) =>
+  `${val}`.match(zipRegex) ? `postal=${val}` : ""
+);
+
 export function createQueryString(filter?: object): string {
   if (!filter) {
     return "";
@@ -9,11 +26,9 @@ export function createQueryString(filter?: object): string {
     if (value === null || value === undefined || value === "") {
       continue;
     }
-
-    switch (name) {
-      case "query":
-        queryString += `query=${encodeURIComponent(value)}`;
-        break;
+    const rewriter = rewriteMap.get(name);
+    if (rewriter) {
+      queryString += rewriter(value);
     }
   }
   return queryString;
