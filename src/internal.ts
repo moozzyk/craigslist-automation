@@ -26,7 +26,6 @@ export async function* getAsyncIterator(
 ): AsyncIterableIterator<string> {
   const url = `https://${site}.craigslist.org/search/${category}?${queryString}`;
   console.log(url);
-  return;
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url, {
@@ -34,8 +33,11 @@ export async function* getAsyncIterator(
   });
   let elements = await page.$$("a.post-title");
   console.log(elements.length);
-  for await (let e of elements) {
-    yield await (await e.getProperty("href")).jsonValue();
+  try {
+    for await (let e of elements) {
+      yield await (await e.getProperty("href")).jsonValue();
+    }
+  } finally {
+    browser.close();
   }
-  browser.close();
 }
