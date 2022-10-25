@@ -51,4 +51,15 @@ describe("createQueryString", () => {
     expect(createQueryString({ zipCode: "190210" })).toEqual("");
     expect(createQueryString({ zipCode: "9" })).toEqual("");
   });
+
+  it("should return correct query string for price filter", () => {
+    expect(createQueryString({ minPrice: 1000 })).toEqual("min_price=1000");
+    expect(createQueryString({ maxPrice: 78 })).toEqual("max_price=78");
+  });
+
+  it("should return correct query string for make and model filter", () => {
+    expect(createQueryString({ makeAndModel: "k5 blazer" })).toEqual(
+      "make_and_model=k5%20blazer"
+    );
+  });
 });

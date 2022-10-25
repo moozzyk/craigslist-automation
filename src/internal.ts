@@ -16,6 +16,12 @@ rewriteMap.set("milesFromLocation", (val) => `searchDistance=${val}`);
 rewriteMap.set("zipCode", (val) =>
   `${val}`.match(zipRegex) ? `postal=${val}` : ""
 );
+rewriteMap.set("minPrice", (val) => `min_price=${val}`);
+rewriteMap.set("maxPrice", (val) => `max_price=${val}`);
+rewriteMap.set(
+  "makeAndModel",
+  (val) => `make_and_model=${encodeURIComponent(val)}`
+);
 
 export function createQueryString(filter?: object): string {
   if (!filter) {
