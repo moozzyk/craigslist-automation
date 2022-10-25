@@ -27,17 +27,17 @@ export function createQueryString(filter?: object): string {
   if (!filter) {
     return "";
   }
-  let queryString = "";
+  let queryStringParts: string[] = [];
   for (let [name, value] of Object.entries(filter)) {
     if (value === null || value === undefined || value === "") {
       continue;
     }
     const rewriter = rewriteMap.get(name);
     if (rewriter) {
-      queryString += rewriter(value);
+      queryStringParts.push(rewriter(value));
     }
   }
-  return queryString;
+  return queryStringParts.join("&");
 }
 
 export async function* getAsyncIterator(
