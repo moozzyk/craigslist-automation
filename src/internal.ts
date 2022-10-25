@@ -40,12 +40,25 @@ export function createQueryString(filter?: object): string {
   return queryStringParts.join("&");
 }
 
+export function createUrl(
+  site: string,
+  category: string,
+  area?: string,
+  filter?: object
+) {
+  const areaPart = area ? `/${area}` : "";
+  let queryString = createQueryString(filter);
+  queryString = queryString ? `?${queryString}` : "";
+  return `https://${site}.craigslist.org/search${areaPart}/${category}${queryString}`;
+}
+
 export async function* getAsyncIterator(
   site: string,
   category: string,
-  queryString: string
+  area?: string,
+  filter?: object
 ): AsyncIterableIterator<string> {
-  const url = `https://${site}.craigslist.org/search/${category}?${queryString}`;
+  const url = createUrl(site, category, area, filter);
   console.log(url);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();

@@ -1,4 +1,4 @@
-import { createQueryString } from "../src/internal";
+import { createQueryString, createUrl } from "../src/internal";
 
 describe("createQueryString", () => {
   it("should return empty query string for undefined filter", () => {
@@ -72,5 +72,28 @@ describe("createQueryString", () => {
         purveyor: "owner",
       })
     ).toEqual("max_price=5000&hasPic=1&query=blazer%20k5&purveyor=owner");
+  });
+});
+
+describe("createUrl", () => {
+  it("should create correct url", () => {
+    expect(createUrl("seattle", "cta")).toEqual(
+      "https://seattle.craigslist.org/search/cta"
+    );
+    expect(createUrl("seattle", "cta", undefined)).toEqual(
+      "https://seattle.craigslist.org/search/cta"
+    );
+    expect(createUrl("seattle", "cta", "")).toEqual(
+      "https://seattle.craigslist.org/search/cta"
+    );
+    expect(createUrl("seattle", "cta", "est")).toEqual(
+      "https://seattle.craigslist.org/search/est/cta"
+    );
+    expect(createUrl("seattle", "cta", "est", { purveyor: "dealer" })).toEqual(
+      "https://seattle.craigslist.org/search/est/cta?purveyor=dealer"
+    );
+    expect(
+      createUrl("seattle", "cta", undefined, { purveyor: "dealer" })
+    ).toEqual("https://seattle.craigslist.org/search/cta?purveyor=dealer");
   });
 });

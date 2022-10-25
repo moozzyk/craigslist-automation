@@ -8,10 +8,10 @@ import { BoatsForSaleFilter, CarsAndTrucksForSaleFilter } from "./filters";
 
 export async function* forSaleCarAndTrucks(
   site: string,
-  filter: CarsAndTrucksForSaleFilter
+  filter: CarsAndTrucksForSaleFilter,
+  area?: string
 ) {
-  const queryString = createQueryString(filter);
-  yield* getAsyncIterator(site, "cta", queryString);
+  yield* getAsyncIterator(site, "cta", area, filter);
 }
 
 (async () => {
