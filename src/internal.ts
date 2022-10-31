@@ -1,3 +1,4 @@
+import { GalleryPost } from "./types";
 import * as puppeteer from "puppeteer";
 
 const zipRegex = /^\d{5}$/;
@@ -52,12 +53,51 @@ export function createUrl(
   return `https://${site}.craigslist.org/search${areaPart}/${category}${queryString}`;
 }
 
+async function extractValue(
+  element: puppeteer.ElementHandle,
+  elementName: string,
+  propertyName?: string
+): Promise<string | null> {
+  let e = await element.$(elementName);
+  if (!e) {
+    console.debug(`Element '${elementName}' not found.`);
+    return null;
+  }
+  if (!propertyName) {
+    return await (await e.getProperty("textContent")).jsonValue();
+  }
+
+  let p = await e.getProperty(propertyName);
+  if (!p) {
+    console.debug(`Property '${propertyName}' not found.`);
+    return null;
+  }
+
+  return await p.jsonValue();
+}
+
+async function createGalleryPost(
+  galleryCard: puppeteer.ElementHandle
+): Promise<GalleryPost> {
+  // Images are not loaded until the post is in the view
+  await galleryCard.hover();
+  const [url, title, date, imageUrl, price] = await Promise.all([
+    extractValue(galleryCard, "a.post-title", "href"),
+    extractValue(galleryCard, "span.label"),
+    extractValue(galleryCard, "time.post-date", "dateTime"),
+    extractValue(galleryCard, "img", "src"),
+    extractValue(galleryCard, "span.post-price"),
+  ]);
+
+  return new GalleryPost(title, price, date, url, imageUrl);
+}
+
 export async function* getAsyncIterator(
   site: string,
   category: string,
   area?: string,
   filter?: object
-): AsyncIterableIterator<string> {
+): AsyncIterableIterator<GalleryPost> {
   const url = createUrl(site, category, area, filter);
   console.log(url);
   const browser = await puppeteer.launch();
@@ -65,11 +105,12 @@ export async function* getAsyncIterator(
   await page.goto(url, {
     waitUntil: "networkidle0",
   });
-  let elements = await page.$$("a.post-title");
-  console.log(elements.length);
+  let galleryCards = await page.$$("div.gallery-card");
+  console.log(galleryCards.length);
   try {
-    for await (let e of elements) {
-      yield await (await e.getProperty("href")).jsonValue();
+    for await (let galleryCard of galleryCards) {
+      yield await createGalleryPost(galleryCard);
+      // (await e.getProperty("href")).jsonValue();
     }
   } finally {
     browser.close();

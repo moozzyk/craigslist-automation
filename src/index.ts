@@ -1,4 +1,5 @@
-import { getAsyncIterator, createQueryString } from "./internal";
+import { GalleryPost } from "./types";
+import { getAsyncIterator } from "./internal";
 import { BoatsForSaleFilter, CarsAndTrucksForSaleFilter } from "./filters";
 
 // export async function* forSaleBoats(site: string, filter: BoatsForSaleFilter?) {
@@ -10,16 +11,16 @@ export async function* forSaleCarAndTrucks(
   site: string,
   filter: CarsAndTrucksForSaleFilter,
   area?: string
-) {
+): AsyncIterableIterator<GalleryPost> {
   yield* getAsyncIterator(site, "cta", area, filter);
 }
 
 (async () => {
   let value = 0;
-  for await (let i of forSaleCarAndTrucks("seattle", {
-    query: "blazer k5",
+  for await (let galleryPost of forSaleCarAndTrucks("seattle", {
+    query: "blazer",
   })) {
-    console.log("number: " + i);
+    console.log("number: " + JSON.stringify(galleryPost));
     if (value++ > 4) {
       break;
     }
