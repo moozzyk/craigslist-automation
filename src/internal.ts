@@ -89,7 +89,7 @@ async function createGalleryPost(
     extractValue(galleryCard, "span.post-price"),
   ]);
 
-  return new GalleryPost(title, price, date, url, imageUrl);
+  return new GalleryPost(title, price, date, url);
 }
 
 export async function* getAsyncIterator(
