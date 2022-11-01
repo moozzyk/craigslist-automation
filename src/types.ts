@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 export class GalleryPost {
   readonly title: string | null;
   readonly price: string | null;
@@ -14,5 +16,14 @@ export class GalleryPost {
     this.price = price;
     this.datePosted = datePosted ? new Date(datePosted) : null;
     this.url = url;
+  }
+
+  async getPost(): Promise<string> {
+    if (!this.url) {
+      throw new Error("Url not set.");
+    }
+
+    const resp = await fetch(this.url);
+    return resp.text();
   }
 }

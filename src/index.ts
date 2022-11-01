@@ -18,9 +18,11 @@ export async function* forSaleCarAndTrucks(
 (async () => {
   let value = 0;
   for await (let galleryPost of forSaleCarAndTrucks("seattle", {
-    query: "blazer",
+    query: "blazer k5",
   })) {
     console.log("number: " + JSON.stringify(galleryPost));
+    const post = await galleryPost.getPost();
+    console.log(post);
     if (value++ > 4) {
       break;
     }
