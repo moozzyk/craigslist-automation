@@ -1,4 +1,18 @@
 import fetch from "node-fetch";
+import * as cheerio from "cheerio";
+import { ElementType } from "domelementtype";
+import { Text } from "domhandler";
+
+export interface Post {
+  url: string;
+  title: string;
+  description: string;
+  price?: string;
+  datePosted: Date;
+  dateUpdated?: Date;
+  images: string[];
+  // TODO: location, attributes
+}
 
 export class GalleryPost {
   readonly title: string | null;
@@ -18,12 +32,38 @@ export class GalleryPost {
     this.url = url;
   }
 
-  async getPost(): Promise<string> {
+  async getPost(): Promise<Post> {
     if (!this.url) {
       throw new Error("Url not set.");
     }
 
     const resp = await fetch(this.url);
-    return resp.text();
+    // console.log(await resp.text());
+    const $ = cheerio.load(await resp.text());
+
+    var datePosted = undefined;
+    var dateUpdated = undefined;
+    let dates = $("time");
+    for (let e of dates) {
+      if (e.prev?.type === ElementType.Text) {
+        const prevSiblingText = (e.prev as Text).data.trim();
+        const datetime = new Date(e.attribs["datetime"]);
+        if (prevSiblingText === "posted:") {
+          datePosted = datetime;
+        } else if (prevSiblingText === "updated:") {
+          dateUpdated = datetime;
+        }
+      }
+    }
+
+    let post = <Post>{
+      url: this.url,
+      title: $("#titletextonly").text(),
+      // description: $("#postingbody").html(),
+      price: $("span .price").text(),
+      datePosted: datePosted,
+      dateUpdated: dateUpdated,
+    };
+    return post;
   }
 }
