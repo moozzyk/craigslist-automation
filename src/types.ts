@@ -56,13 +56,18 @@ export class GalleryPost {
       }
     }
 
+    let images = $(".thumb")
+      .map((_, e) => e.attribs["href"])
+      .toArray();
+
     let post = <Post>{
       url: this.url,
       title: $("#titletextonly").text(),
-      // description: $("#postingbody").html(),
+      description: $("#postingbody").html(),
       price: $("span .price").text(),
       datePosted: datePosted,
       dateUpdated: dateUpdated,
+      images: images,
     };
     return post;
   }
