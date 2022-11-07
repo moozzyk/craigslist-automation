@@ -155,6 +155,18 @@ function getPostDates($: cheerio.CheerioAPI): {
   };
 }
 
+function getAttributes($: cheerio.CheerioAPI): Record<string, string> {
+  let attrGroups = $("p.attrgroup");
+  let attributes = $("span", attrGroups);
+  return Object.fromEntries(
+    attributes
+      .map((_, e) => $(e).text())
+      .toArray()
+      .filter((s) => s.includes(":"))
+      .map((s) => s.split(":").map((s) => s.trim()))
+  );
+}
+
 export function createPost(postUrl: string, postText: string): Post {
   const $ = cheerio.load(postText);
 
@@ -163,6 +175,7 @@ export function createPost(postUrl: string, postText: string): Post {
     ...getPostData($),
     description: $("#postingbody").html() || "",
     ...getPostDates($),
+    attributes: getAttributes($),
   };
 
   return post;

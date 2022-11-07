@@ -125,6 +125,16 @@ K5 Blazer Wheeler:Complete Overhaul<br>
         "https://images.craigslist.org/00C0C_l5JStdo0QbZz_0CI0t2_600x450.jpg",
         "https://images.craigslist.org/00U0U_2dNP3Sbh0Toz_0CI0t2_600x450.jpg",
       ],
+      attributes: {
+        condition: "good",
+        cylinders: "8 cylinders",
+        drive: "4wd",
+        fuel: "gas",
+        odometer: "123456",
+        "paint color": "black",
+        "title status": "clean",
+        transmission: "automatic",
+      },
     });
   });
 });

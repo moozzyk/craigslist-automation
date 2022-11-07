@@ -11,8 +11,8 @@ export interface Post {
   state?: string;
   datePosted?: Date;
   dateUpdated?: Date;
-  images: string[];
-  // TODO: location, attributes
+  images?: string[];
+  attributes?: Record<string, string>;
 }
 
 export class GalleryPost {
