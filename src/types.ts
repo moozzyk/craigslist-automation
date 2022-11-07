@@ -6,7 +6,10 @@ export interface Post {
   title: string;
   description: string;
   price?: string;
-  datePosted: Date;
+  currency?: string;
+  city?: string;
+  state?: string;
+  datePosted?: Date;
   dateUpdated?: Date;
   images: string[];
   // TODO: location, attributes

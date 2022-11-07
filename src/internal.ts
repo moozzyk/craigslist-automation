@@ -119,11 +119,24 @@ export async function* getAsyncIterator(
   }
 }
 
-export function createPost(postUrl: string, postText: string): Post {
-  const $ = cheerio.load(postText);
+function getPostData($: cheerio.CheerioAPI): any {
+  let postData: any = JSON.parse($("script#ld_posting_data").text());
+  return {
+    title: postData.name,
+    price: postData.offers?.price,
+    currency: postData.offers?.priceCurrency,
+    city: postData.offers?.availableAtOrFrom?.address?.addressLocality,
+    state: postData.offers?.availableAtOrFrom?.address?.addressRegion,
+    images: postData.image,
+  };
+}
 
-  var datePosted = undefined;
-  var dateUpdated = undefined;
+function getPostDates($: cheerio.CheerioAPI): {
+  datePosted?: Date;
+  dateUpdated?: Date;
+} {
+  let datePosted = undefined;
+  let dateUpdated = undefined;
   let dates = $("time");
   for (let e of dates) {
     if (e.prev?.type === ElementType.Text) {
@@ -136,19 +149,21 @@ export function createPost(postUrl: string, postText: string): Post {
       }
     }
   }
+  return {
+    ...(datePosted && { datePosted }),
+    ...(dateUpdated && { dateUpdated }),
+  };
+}
 
-  let images = $(".thumb")
-    .map((_, e) => e.attribs["href"])
-    .toArray();
+export function createPost(postUrl: string, postText: string): Post {
+  const $ = cheerio.load(postText);
 
   let post = <Post>{
     url: postUrl,
-    title: $("#titletextonly").text(),
-    description: $("#postingbody").html(),
-    price: $("span .price").text(),
-    datePosted: datePosted,
-    dateUpdated: dateUpdated,
-    images: images,
+    ...getPostData($),
+    description: $("#postingbody").html() || "",
+    ...getPostDates($),
   };
+
   return post;
 }

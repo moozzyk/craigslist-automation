@@ -1,5 +1,5 @@
 import { createPost, createQueryString, createUrl } from "../src/internal";
-import { readFile, opendir } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 
 describe("createQueryString", () => {
   it("should return empty query string for undefined filter", () => {
@@ -113,7 +113,10 @@ describe("createPost", () => {
         </div>
 K5 Blazer Wheeler:Complete Overhaul<br>
     `,
-      price: "$20,000",
+      price: "20000.00",
+      currency: "USD",
+      city: "Lake Stevens",
+      state: "WA",
       datePosted: new Date("2022-11-02T03:07:31.000Z"),
       dateUpdated: new Date("2022-11-02T03:07:32.000Z"),
       images: [
