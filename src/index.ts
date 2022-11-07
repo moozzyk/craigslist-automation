@@ -20,6 +20,7 @@ export async function* forSaleCarAndTrucks(
   for await (let galleryPost of forSaleCarAndTrucks("seattle", {
     query: "blazer k5",
   })) {
+    console.log(galleryPost);
     const post = await galleryPost.getPost();
     console.log(post);
     if (value++ > 13) {

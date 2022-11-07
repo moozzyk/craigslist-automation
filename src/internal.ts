@@ -83,13 +83,10 @@ async function extractValue(
 async function createGalleryPost(
   galleryCard: puppeteer.ElementHandle
 ): Promise<GalleryPost> {
-  // Images are not loaded until the post is in the view
-  await galleryCard.hover();
-  const [url, title, date, imageUrl, price] = await Promise.all([
+  const [url, title, date, price] = await Promise.all([
     extractValue(galleryCard, "a.post-title", "href"),
     extractValue(galleryCard, "span.label"),
     extractValue(galleryCard, "time.post-date", "dateTime"),
-    extractValue(galleryCard, "img", "src"),
     extractValue(galleryCard, "span.post-price"),
   ]);
 
