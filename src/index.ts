@@ -12,7 +12,7 @@ export async function* forSaleCarAndTrucks(
   filter: CarsAndTrucksForSaleFilter,
   area?: string
 ): AsyncIterableIterator<GalleryPost> {
-  yield* getAsyncIterator(site, "cta", area, filter);
+  yield* getAsyncIterator(site, "pts", area, filter);
 }
 
 (async () => {
@@ -22,8 +22,7 @@ export async function* forSaleCarAndTrucks(
   })) {
     const post = await galleryPost.getPost();
     console.log(post);
-    break;
-    if (value++ > 2) {
+    if (value++ > 13) {
       break;
     }
   }

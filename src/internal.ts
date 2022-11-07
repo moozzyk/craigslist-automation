@@ -3,6 +3,7 @@ import * as puppeteer from "puppeteer";
 import * as cheerio from "cheerio";
 import { ElementType } from "domelementtype";
 import { Text } from "domhandler";
+import { attr } from "cheerio/lib/api/attributes";
 
 const zipRegex = /^\d{5}$/;
 
@@ -102,14 +103,13 @@ export async function* getAsyncIterator(
   filter?: object
 ): AsyncIterableIterator<GalleryPost> {
   const url = createUrl(site, category, area, filter);
-  console.log(url);
+  console.debug(url);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url, {
     waitUntil: "networkidle0",
   });
   let galleryCards = await page.$$("div.gallery-card");
-  console.log(galleryCards.length);
   try {
     for await (let galleryCard of galleryCards) {
       yield await createGalleryPost(galleryCard);
@@ -120,14 +120,20 @@ export async function* getAsyncIterator(
 }
 
 function getPostData($: cheerio.CheerioAPI): any {
-  let postData: any = JSON.parse($("script#ld_posting_data").text());
+  let postDataText = $("script#ld_posting_data").text();
+  if (postDataText.length === 0) {
+    return {
+      title: $("#titletextonly").text(),
+    };
+  }
+  let postData: any = JSON.parse(postDataText);
   return {
     title: postData.name,
     price: postData.offers?.price,
     currency: postData.offers?.priceCurrency,
     city: postData.offers?.availableAtOrFrom?.address?.addressLocality,
     state: postData.offers?.availableAtOrFrom?.address?.addressRegion,
-    images: postData.image,
+    images: postData.image || [],
   };
 }
 
@@ -169,13 +175,13 @@ function getAttributes($: cheerio.CheerioAPI): Record<string, string> {
 
 export function createPost(postUrl: string, postText: string): Post {
   const $ = cheerio.load(postText);
-
+  let attributes = getAttributes($);
   let post = <Post>{
     url: postUrl,
     ...getPostData($),
     description: $("#postingbody").html() || "",
     ...getPostDates($),
-    attributes: getAttributes($),
+    ...(Object.entries(attributes).length > 0 && { attributes: attributes }),
   };
 
   return post;

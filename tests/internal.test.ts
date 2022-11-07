@@ -100,7 +100,7 @@ describe("createUrl", () => {
 });
 
 describe("createPost", () => {
-  it("returns valid post details", async () => {
+  it("returns valid post for full post", async () => {
     const file = await readFile("tests/post.html");
     const post = createPost("post.html", file.toString());
     expect(post).toEqual({
@@ -135,6 +135,24 @@ K5 Blazer Wheeler:Complete Overhaul<br>
         "title status": "clean",
         transmission: "automatic",
       },
+    });
+  });
+
+  it("returns valid post for bare post", async () => {
+    const file = await readFile("tests/barepost.html");
+    const post = createPost("post.html", file.toString());
+    expect(post).toEqual({
+      url: "post.html",
+      title: "K5 Blazer",
+      datePosted: new Date("2022-10-21T13:58:19.000Z"),
+      dateUpdated: new Date("2022-11-05T23:27:05.000Z"),
+      description: `
+        <div class=\"print-information print-qrcode-container\">
+            <p class=\"print-qrcode-label\">QR Code Link to This Post</p>
+            <div class=\"print-qrcode\" data-location=\"https://seattle.craigslist.org/tac/pts/d/tacoma-k5-blazer/7548220693.html\"></div>
+        </div>
+Looking for a frame for a 75-78 K5 Blazer<br>
+    `,
     });
   });
 });
