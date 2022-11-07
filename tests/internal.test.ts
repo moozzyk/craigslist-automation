@@ -1,4 +1,5 @@
-import { createQueryString, createUrl } from "../src/internal";
+import { createPost, createQueryString, createUrl } from "../src/internal";
+import { readFile, opendir } from "node:fs/promises";
 
 describe("createQueryString", () => {
   it("should return empty query string for undefined filter", () => {
@@ -95,5 +96,32 @@ describe("createUrl", () => {
     expect(
       createUrl("seattle", "cta", undefined, { purveyor: "dealer" })
     ).toEqual("https://seattle.craigslist.org/search/cta?purveyor=dealer");
+  });
+});
+
+describe("createPost", () => {
+  it("returns valid post details", async () => {
+    const file = await readFile("tests/post.html");
+    const post = createPost("post.html", file.toString());
+    expect(post).toEqual({
+      url: "post.html",
+      title: "K5 Blazer (Square Body)",
+      description: `
+        <div class="print-information print-qrcode-container">
+            <p class="print-qrcode-label">QR Code Link to This Post</p>
+            <div class="print-qrcode" data-location="https://seattle.craigslist.org/see/cto/d/lake-stevens-k5-blazer-square-body/7552653376.html"></div>
+        </div>
+K5 Blazer Wheeler:Complete Overhaul<br>
+    `,
+      price: "$20,000",
+      datePosted: new Date("2022-11-02T03:07:31.000Z"),
+      dateUpdated: new Date("2022-11-02T03:07:32.000Z"),
+      images: [
+        "https://images.craigslist.org/00707_4SxHHnZZYVDz_0CI0t2_600x450.jpg",
+        "https://images.craigslist.org/00V0V_eELSOhgQhphz_0CI0t2_600x450.jpg",
+        "https://images.craigslist.org/00C0C_l5JStdo0QbZz_0CI0t2_600x450.jpg",
+        "https://images.craigslist.org/00U0U_2dNP3Sbh0Toz_0CI0t2_600x450.jpg",
+      ],
+    });
   });
 });
