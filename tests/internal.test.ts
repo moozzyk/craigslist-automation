@@ -106,13 +106,8 @@ describe("createPost", () => {
     expect(post).toEqual({
       url: "post.html",
       title: "K5 Blazer (Square Body)",
-      description: `
-        <div class="print-information print-qrcode-container">
-            <p class="print-qrcode-label">QR Code Link to This Post</p>
-            <div class="print-qrcode" data-location="https://seattle.craigslist.org/see/cto/d/lake-stevens-k5-blazer-square-body/7552653376.html"></div>
-        </div>
-K5 Blazer Wheeler:Complete Overhaul<br>
-    `,
+      description:
+        "K5 Blazer Wheeler:Complete Overhaul\n\nRebuilt 350/350/205\n14bolt full float\nDana 44",
       price: "20000.00",
       currency: "USD",
       city: "Lake Stevens",
@@ -146,13 +141,7 @@ K5 Blazer Wheeler:Complete Overhaul<br>
       title: "K5 Blazer",
       datePosted: new Date("2022-10-21T13:58:19.000Z"),
       dateUpdated: new Date("2022-11-05T23:27:05.000Z"),
-      description: `
-        <div class=\"print-information print-qrcode-container\">
-            <p class=\"print-qrcode-label\">QR Code Link to This Post</p>
-            <div class=\"print-qrcode\" data-location=\"https://seattle.craigslist.org/tac/pts/d/tacoma-k5-blazer/7548220693.html\"></div>
-        </div>
-Looking for a frame for a 75-78 K5 Blazer<br>
-    `,
+      description: "Looking for a frame for a 75-78 K5 Blazer",
     });
   });
 });

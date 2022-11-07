@@ -170,13 +170,19 @@ function getAttributes($: cheerio.CheerioAPI): Record<string, string> {
   );
 }
 
+function getItemDescription($: cheerio.CheerioAPI): string {
+  let postBody = $("#postingbody").clone();
+  postBody.find("div.print-qrcode-container").remove();
+  return postBody.text()?.trim() || "";
+}
+
 export function createPost(postUrl: string, postText: string): Post {
   const $ = cheerio.load(postText);
   let attributes = getAttributes($);
   let post = <Post>{
     url: postUrl,
     ...getPostData($),
-    description: $("#postingbody").html() || "",
+    description: getItemDescription($),
     ...getPostDates($),
     ...(Object.entries(attributes).length > 0 && { attributes: attributes }),
   };
