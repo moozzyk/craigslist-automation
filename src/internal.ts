@@ -142,8 +142,8 @@ function getPostDates($: cheerio.CheerioAPI): {
   let dateUpdated = undefined;
   let dates = $("time");
   for (let e of dates) {
-    if (e.prev?.type === ElementType.Text) {
-      const prevSiblingText = (e.prev as Text).data.trim();
+    if (e.prev) {
+      const prevSiblingText = $(e.prev).text().trim();
       const datetime = new Date(e.attribs["datetime"]);
       if (prevSiblingText === "posted:") {
         datePosted = datetime;
