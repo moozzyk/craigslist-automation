@@ -1,5 +1,8 @@
-import { GalleryPost } from "./types";
+import { GalleryPost, Post } from "./types";
 import * as puppeteer from "puppeteer";
+import * as cheerio from "cheerio";
+import { ElementType } from "domelementtype";
+import { Text } from "domhandler";
 
 const zipRegex = /^\d{5}$/;
 
@@ -110,9 +113,42 @@ export async function* getAsyncIterator(
   try {
     for await (let galleryCard of galleryCards) {
       yield await createGalleryPost(galleryCard);
-      // (await e.getProperty("href")).jsonValue();
     }
   } finally {
     browser.close();
   }
+}
+
+export function createPost(postUrl: string, postText: string): Post {
+  const $ = cheerio.load(postText);
+
+  var datePosted = undefined;
+  var dateUpdated = undefined;
+  let dates = $("time");
+  for (let e of dates) {
+    if (e.prev?.type === ElementType.Text) {
+      const prevSiblingText = (e.prev as Text).data.trim();
+      const datetime = new Date(e.attribs["datetime"]);
+      if (prevSiblingText === "posted:") {
+        datePosted = datetime;
+      } else if (prevSiblingText === "updated:") {
+        dateUpdated = datetime;
+      }
+    }
+  }
+
+  let images = $(".thumb")
+    .map((_, e) => e.attribs["href"])
+    .toArray();
+
+  let post = <Post>{
+    url: postUrl,
+    title: $("#titletextonly").text(),
+    description: $("#postingbody").html(),
+    price: $("span .price").text(),
+    datePosted: datePosted,
+    dateUpdated: dateUpdated,
+    images: images,
+  };
+  return post;
 }

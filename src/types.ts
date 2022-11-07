@@ -1,7 +1,5 @@
 import fetch from "node-fetch";
-import * as cheerio from "cheerio";
-import { ElementType } from "domelementtype";
-import { Text } from "domhandler";
+import { createPost } from "./internal";
 
 export interface Post {
   url: string;
@@ -38,37 +36,7 @@ export class GalleryPost {
     }
 
     const resp = await fetch(this.url);
-    // console.log(await resp.text());
-    const $ = cheerio.load(await resp.text());
-
-    var datePosted = undefined;
-    var dateUpdated = undefined;
-    let dates = $("time");
-    for (let e of dates) {
-      if (e.prev?.type === ElementType.Text) {
-        const prevSiblingText = (e.prev as Text).data.trim();
-        const datetime = new Date(e.attribs["datetime"]);
-        if (prevSiblingText === "posted:") {
-          datePosted = datetime;
-        } else if (prevSiblingText === "updated:") {
-          dateUpdated = datetime;
-        }
-      }
-    }
-
-    let images = $(".thumb")
-      .map((_, e) => e.attribs["href"])
-      .toArray();
-
-    let post = <Post>{
-      url: this.url,
-      title: $("#titletextonly").text(),
-      description: $("#postingbody").html(),
-      price: $("span .price").text(),
-      datePosted: datePosted,
-      dateUpdated: dateUpdated,
-      images: images,
-    };
-    return post;
+    // TODO: handle errors
+    return createPost(this.url, await resp.text());
   }
 }
