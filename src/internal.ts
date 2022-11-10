@@ -1,9 +1,6 @@
 import { GalleryPost, Post } from "./types";
 import * as puppeteer from "puppeteer";
 import * as cheerio from "cheerio";
-import { ElementType } from "domelementtype";
-import { Text } from "domhandler";
-import { attr } from "cheerio/lib/api/attributes";
 
 const zipRegex = /^\d{5}$/;
 
@@ -84,10 +81,12 @@ async function createGalleryPost(
   galleryCard: puppeteer.ElementHandle
 ): Promise<GalleryPost> {
   const [url, title, date, price] = await Promise.all([
-    extractValue(galleryCard, "a.post-title", "href"),
-    extractValue(galleryCard, "span.label"),
-    extractValue(galleryCard, "time.post-date", "dateTime"),
-    extractValue(galleryCard, "span.post-price"),
+    extractValue(galleryCard, "a.titlestring", "href"),
+    extractValue(galleryCard, "a.titlestring"),
+    galleryCard
+      .$("span.when")
+      .then((e) => (e ? extractValue(e, "span", "title") : null)),
+    extractValue(galleryCard, "span.priceinfo"),
   ]);
 
   return new GalleryPost(title, price, date, url);
