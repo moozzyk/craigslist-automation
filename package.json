@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "node build.js"
