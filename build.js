@@ -13,6 +13,7 @@ const base = {
   external: Object.keys(dependencies).concat(
     Object.keys(peerDependencies ?? {})
   ),
+  platform: "node",
 };
 
 build({

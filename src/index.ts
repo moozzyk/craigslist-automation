@@ -28,3 +28,6 @@ export async function* forSaleCarAndTrucks(
     }
   }
 })();
+
+export type { Post, GalleryPost } from "./types";
+export type { CarsAndTrucksForSaleFilter } from "./filters";

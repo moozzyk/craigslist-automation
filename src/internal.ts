@@ -25,6 +25,7 @@ rewriteMap.set(
   (val) => `make_and_model=${encodeURIComponent(val)}`
 );
 
+/** @internal */
 export function createQueryString(filter?: object): string {
   if (!filter) {
     return "";
@@ -42,6 +43,7 @@ export function createQueryString(filter?: object): string {
   return queryStringParts.join("&");
 }
 
+/** @internal */
 export function createUrl(
   site: string,
   category: string,
@@ -92,6 +94,7 @@ async function createGalleryPost(
   return new GalleryPost(title, price, date, url);
 }
 
+/** @internal */
 export async function* getAsyncIterator(
   site: string,
   category: string,
@@ -175,6 +178,7 @@ function getItemDescription($: cheerio.CheerioAPI): string {
   return postBody.text()?.trim() || "";
 }
 
+/** @internal */
 export function createPost(postUrl: string, postText: string): Post {
   const $ = cheerio.load(postText);
   let attributes = getAttributes($);
