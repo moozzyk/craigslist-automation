@@ -95,7 +95,7 @@ async function createGalleryPost(
 }
 
 /** @internal */
-export async function* getAsyncIterator(
+export async function* getGalleryPosts(
   site: string,
   category: string,
   area?: string,
