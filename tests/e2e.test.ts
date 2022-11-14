@@ -1,8 +1,8 @@
-import { forSaleCarAndTrucks } from "../src";
+import { forSaleCarsAndTrucks } from "../src";
 
 describe("forSaleCarAndTrucks", () =>
   it("returns gallery posts and allows showing details", async () => {
-    for await (let galleryPost of forSaleCarAndTrucks("seattle", {
+    for await (let galleryPost of forSaleCarsAndTrucks("seattle", {
       query: "Ford",
       hasImage: true,
       purveyor: "owner",

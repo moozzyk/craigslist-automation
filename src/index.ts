@@ -7,7 +7,7 @@ import { BoatsForSaleFilter, CarsAndTrucksForSaleFilter } from "./filters";
 //   // return getAsyncIterator(site, "cta", );
 // }
 
-export async function* forSaleCarAndTrucks(
+export async function* forSaleCarsAndTrucks(
   site: string,
   filter: CarsAndTrucksForSaleFilter,
   area?: string
