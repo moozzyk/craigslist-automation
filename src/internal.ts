@@ -102,7 +102,6 @@ export async function* getAsyncIterator(
   filter?: object
 ): AsyncIterableIterator<GalleryPost> {
   const url = createUrl(site, category, area, filter);
-  console.debug(url);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url, {

@@ -15,19 +15,4 @@ export async function* forSaleCarAndTrucks(
   yield* getAsyncIterator(site, "cta", area, filter);
 }
 
-(async () => {
-  let value = 0;
-  for await (let galleryPost of forSaleCarAndTrucks("seattle", {
-    query: "blazer k5",
-  })) {
-    console.log(galleryPost);
-    const post = await galleryPost.getPost();
-    console.log(post);
-    if (value++ > 3) {
-      break;
-    }
-  }
-})();
-
-export type { Post, GalleryPost } from "./types";
 export type { CarsAndTrucksForSaleFilter } from "./filters";
