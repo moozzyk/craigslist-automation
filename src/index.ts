@@ -19,3 +19,4 @@ export async function* forSaleCarsAndTrucks(
 }
 
 export type { CarsAndTrucksForSaleFilter, BoatsForSaleFilter } from "./filters";
+export type { GalleryPost, Post } from "./types";
