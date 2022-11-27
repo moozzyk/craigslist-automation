@@ -1,6 +1,6 @@
 {
   "name": "craigslist-automation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Programmatic access to craigslist posts.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
