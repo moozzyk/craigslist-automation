@@ -9,6 +9,7 @@
     "test": "jest",
     "build": "node build.js"
   },
+  "files": ["dist/**"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/moozzyk/craigslist-automation.git"
