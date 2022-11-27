@@ -14,7 +14,7 @@
     "url": "git+https://github.com/moozzyk/craigslist-automation.git"
   },
   "author": "Pawel Kadluczka",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/moozzyk/craigslist-automation/issues"
   },
