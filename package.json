@@ -1,7 +1,7 @@
 {
   "name": "craigslist-automation",
   "version": "0.0.1",
-  "description": "",
+  "description": "Programmatic access to craigslist posts.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -19,6 +19,9 @@
     "url": "https://github.com/moozzyk/craigslist-automation/issues"
   },
   "homepage": "https://github.com/moozzyk/craigslist-automation#readme",
+  "engines": {
+    "node": ">=16.0.0" 
+  }, 
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
     "@types/jest": "^29.2.0",
