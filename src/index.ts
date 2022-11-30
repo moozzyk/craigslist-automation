@@ -18,5 +18,9 @@ export async function* forSaleCarsAndTrucks(
   yield* getGalleryPosts(site, "cta", area, filter);
 }
 
-export type { CarsAndTrucksForSaleFilter, BoatsForSaleFilter } from "./filters";
+export type {
+  CarsAndTrucksForSaleFilter,
+  BoatsForSaleFilter,
+  ApartmentsHousingForRentFilter,
+} from "./filters";
 export type { GalleryPost, Post } from "./types";

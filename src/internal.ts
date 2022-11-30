@@ -24,6 +24,32 @@ rewriteMap.set(
   "makeAndModel",
   (val) => `make_and_model=${encodeURIComponent(val)}`
 );
+// housing filters rewrites
+rewriteMap.set("minBedrooms", (val) => `min_bedrooms=${val}`);
+rewriteMap.set("maxBedrooms", (val) => `max_bedrooms=${val}`);
+rewriteMap.set("minBathrooms", (val) => `min_bathrooms=${val}`);
+rewriteMap.set("maxBathrooms", (val) => `max_bathrooms=${val}`);
+rewriteMap.set("minSqFt", (val) => `minSqft=${val}`);
+rewriteMap.set("maxSqFt", (val) => `maxSqft=${val}`);
+rewriteMap.set("catsOk", (val) => (val ? "pets_cat=1" : ""));
+rewriteMap.set("dogsOk", (val) => (val ? "pets_dog=1" : ""));
+rewriteMap.set("furnished", (val) => (val ? "is_furnished=1" : ""));
+rewriteMap.set("noSmoking", (val) => (val ? "no_smoking=1" : ""));
+rewriteMap.set("wheelchairAccessible", (val) => (val ? "wheelchaccess=1" : ""));
+rewriteMap.set("airConditioning", (val) => (val ? "airconditioning=1" : ""));
+rewriteMap.set("evCharging", (val) => (val ? "ev_charging=1" : ""));
+rewriteMap.set("noApplicationFee", (val) => (val ? "application_fee=1" : ""));
+rewriteMap.set("noBrokerFee", (val) => (val ? "broker_fee=1" : ""));
+rewriteMap.set("daily", (val) => (val ? "rent_period=1" : ""));
+rewriteMap.set("weekly", (val) => (val ? "rent_period=2" : ""));
+rewriteMap.set("monthly", (val) => (val ? "rent_period=3" : ""));
+rewriteMap.set("rentAvailability", (val) =>
+  val === "within30days"
+    ? "availabilityMode=1"
+    : val == "beyond30days"
+    ? "availabilityMode=2"
+    : ""
+);
 
 /** @internal */
 export function createQueryString(filter?: object): string {

@@ -3,19 +3,16 @@ import { BasicSearchFilter, PriceFilter } from "./commonFilters";
 interface BedroomsFilter {
   minBedrooms?: number;
   maxBedrooms?: number;
-  // https://seattle.craigslist.org/search/apa?max_bedrooms=3&min_bedrooms=1
 }
 
 interface BathroomsFilter {
   minBathrooms?: number;
   maxBathrooms?: number;
-  // https://seattle.craigslist.org/search/apa?max_bathrooms=3&min_bathrooms=1#search=1~gallery~0~0
 }
 
 interface SquareFeetFilter {
   minSqFt?: number;
   maxSqFt?: number;
-  // https://seattle.craigslist.org/search/apa?maxSqft=2000&minSqft=100#search=1~gallery~0~0
 }
 
 interface AdditionalHousingCriteriaFilter {
@@ -28,19 +25,16 @@ interface AdditionalHousingCriteriaFilter {
   evCharging?: boolean;
   noApplicationFee?: boolean;
   noBrokerFee?: boolean;
-  // https://seattle.craigslist.org/search/apa?airconditioning=1&application_fee=1&broker_fee=1&ev_charging=1&is_furnished=1&no_smoking=1&pets_cat=1&pets_dog=1&wheelchaccess=1#search=1~gallery~0~0
 }
 
 interface RentPeriodFilter {
   daily?: boolean;
   weekly?: boolean;
   monthly?: boolean;
-  // https://seattle.craigslist.org/search/apa?rent_period=1&rent_period=2&rent_period=3#search=1~gallery~0~0
 }
 
 interface AvailabilityFilter {
   rentAvailability?: "within30days" | "beyond30days";
-  // https://seattle.craigslist.org/search/apa?availabilityMode=2#search=1~gallery~0~0
 }
 
 interface HousingTypeFilter {

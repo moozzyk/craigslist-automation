@@ -1,9 +1,7 @@
 import { BasicSearchFilter, PriceFilter } from "./commonFilters";
 
-type Purveyor = "dealer" | "owner";
-
 interface PurveyorFilter {
-  purveyor?: Purveyor;
+  purveyor?: "dealer" | "owner";
 }
 
 interface MakeAndModelFilter {
