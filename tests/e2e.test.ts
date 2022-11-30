@@ -22,4 +22,4 @@ describe("forSaleCarAndTrucks", () =>
       expect((post.images ?? []).length).toBeGreaterThan(0);
       break;
     }
-  }));
+  }, 30000));
