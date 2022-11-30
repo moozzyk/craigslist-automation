@@ -1,3 +1,16 @@
+import {
+  BedroomsFilter,
+  BathroomsFilter,
+  SquareFeetFilter,
+  AdditionalHousingCriteriaFilter,
+  RentPeriodFilter,
+  AvailabilityFilter,
+  HousingTypeFilter,
+  LaundryFilter,
+  ParkingFilter,
+  OpenHouseDateFilter,
+} from "./filters/housingFilters";
+
 type Purveyor = "dealer" | "owner";
 
 interface PurveyorFilter {
@@ -19,7 +32,7 @@ interface PriceFilter {
   maxPrice?: number;
 }
 
-interface MakeAndModel {
+interface MakeAndModelFilter {
   makeAndModel?: string;
 }
 
@@ -27,10 +40,24 @@ export interface BoatsForSaleFilter
   extends PurveyorFilter,
     BasicSearchFilter,
     PriceFilter,
-    MakeAndModel {}
+    MakeAndModelFilter {}
 
 export interface CarsAndTrucksForSaleFilter
   extends PurveyorFilter,
     BasicSearchFilter,
     PriceFilter,
-    MakeAndModel {}
+    MakeAndModelFilter {}
+
+export interface ApartmentsHousingForRent
+  extends BasicSearchFilter,
+    PriceFilter,
+    BedroomsFilter,
+    BathroomsFilter,
+    SquareFeetFilter,
+    AdditionalHousingCriteriaFilter,
+    RentPeriodFilter,
+    AvailabilityFilter,
+    HousingTypeFilter,
+    LaundryFilter,
+    ParkingFilter,
+    OpenHouseDateFilter {}

@@ -7,9 +7,11 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "node build.js"
+    "build": "rm -rf dist && node build.js"
   },
-  "files": ["dist/**"],
+  "files": [
+    "dist/**"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/moozzyk/craigslist-automation.git"
@@ -21,8 +23,8 @@
   },
   "homepage": "https://github.com/moozzyk/craigslist-automation#readme",
   "engines": {
-    "node": ">=16.0.0" 
-  }, 
+    "node": ">=16.0.0"
+  },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
     "@types/jest": "^29.2.0",
