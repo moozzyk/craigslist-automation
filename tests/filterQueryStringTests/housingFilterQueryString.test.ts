@@ -93,4 +93,137 @@ describe("createQueryStringWithHousingFilters", () => {
     expect(createQueryString({ rentAvailability: null })).toEqual("");
     expect(createQueryString({ rentAvailability: undefined })).toEqual("");
   });
+
+  it("should return correct filter for Housing Type", () => {
+    expect(createQueryString({ apartment: true })).toEqual("housing_type=1");
+    expect(createQueryString({ apartment: false })).toEqual("");
+
+    expect(createQueryString({ condo: true })).toEqual("housing_type=2");
+    expect(createQueryString({ condo: false })).toEqual("");
+
+    expect(createQueryString({ cottageCabin: true })).toEqual("housing_type=3");
+    expect(createQueryString({ cottageCabin: false })).toEqual("");
+
+    expect(createQueryString({ duplex: true })).toEqual("housing_type=4");
+    expect(createQueryString({ duplex: false })).toEqual("");
+
+    expect(createQueryString({ flat: true })).toEqual("housing_type=5");
+    expect(createQueryString({ flat: false })).toEqual("");
+
+    expect(createQueryString({ house: true })).toEqual("housing_type=6");
+    expect(createQueryString({ house: false })).toEqual("");
+
+    expect(createQueryString({ inLaw: true })).toEqual("housing_type=7");
+    expect(createQueryString({ inLaw: false })).toEqual("");
+
+    expect(createQueryString({ loft: true })).toEqual("housing_type=8");
+    expect(createQueryString({ loft: false })).toEqual("");
+
+    expect(createQueryString({ townhouse: true })).toEqual("housing_type=9");
+    expect(createQueryString({ townhouse: false })).toEqual("");
+
+    expect(createQueryString({ manufactured: true })).toEqual(
+      "housing_type=10"
+    );
+    expect(createQueryString({ manufactured: false })).toEqual("");
+
+    expect(createQueryString({ assistedLiving: true })).toEqual(
+      "housing_type=11"
+    );
+    expect(createQueryString({ assistedLiving: false })).toEqual("");
+
+    expect(createQueryString({ land: true })).toEqual("housing_type=12");
+    expect(createQueryString({ land: false })).toEqual("");
+
+    expect(
+      createQueryString({
+        apartment: true,
+        condo: true,
+        cottageCabin: true,
+        duplex: true,
+        flat: true,
+        house: true,
+        inLaw: true,
+        loft: true,
+        townhouse: true,
+        manufactured: true,
+        assistedLiving: true,
+        land: true,
+      })
+    ).toEqual(
+      "housing_type=1&housing_type=2&housing_type=3&housing_type=4&housing_type=5&housing_type=6&housing_type=7&housing_type=8&housing_type=9&housing_type=10&housing_type=11&housing_type=12"
+    );
+  });
+
+  it("should return correct filter for Laundry", () => {
+    expect(createQueryString({ washerDryerInUnit: true })).toEqual("laundry=1");
+    expect(createQueryString({ washerDryerInUnit: false })).toEqual("");
+
+    expect(createQueryString({ washerDryerHookups: true })).toEqual(
+      "laundry=2"
+    );
+    expect(createQueryString({ washerDryerHookups: false })).toEqual("");
+
+    expect(createQueryString({ laundryInBuilding: true })).toEqual("laundry=3");
+    expect(createQueryString({ laundryInBuilding: false })).toEqual("");
+
+    expect(createQueryString({ laundryOnSite: true })).toEqual("laundry=4");
+    expect(createQueryString({ laundryOnSite: false })).toEqual("");
+
+    expect(createQueryString({ noLaundryOnSite: true })).toEqual("laundry=5");
+    expect(createQueryString({ noLaundryOnSite: false })).toEqual("");
+    expect(
+      createQueryString({
+        washerDryerInUnit: true,
+        washerDryerHookups: true,
+        laundryInBuilding: true,
+        laundryOnSite: true,
+        noLaundryOnSite: true,
+      })
+    ).toEqual("laundry=1&laundry=2&laundry=3&laundry=4&laundry=5");
+  });
+
+  it("should return correct filter for Parking ", () => {
+    expect(createQueryString({ carport: true })).toEqual("parking=1");
+    expect(createQueryString({ carport: false })).toEqual("");
+
+    expect(createQueryString({ attachedGarage: true })).toEqual("parking=2");
+    expect(createQueryString({ attachedGarage: false })).toEqual("");
+
+    expect(createQueryString({ detachedGarage: true })).toEqual("parking=3");
+    expect(createQueryString({ detachedGarage: false })).toEqual("");
+
+    expect(createQueryString({ offStreetParking: true })).toEqual("parking=4");
+    expect(createQueryString({ offStreetParking: false })).toEqual("");
+
+    expect(createQueryString({ streetParking: true })).toEqual("parking=5");
+    expect(createQueryString({ streetParking: false })).toEqual("");
+
+    expect(createQueryString({ valetParking: true })).toEqual("parking=6");
+    expect(createQueryString({ valetParking: false })).toEqual("");
+
+    expect(createQueryString({ noParking: true })).toEqual("parking=7");
+    expect(createQueryString({ noParking: false })).toEqual("");
+
+    expect(
+      createQueryString({
+        carport: true,
+        attachedGarage: true,
+        detachedGarage: true,
+        offStreetParking: true,
+        streetParking: true,
+        valetParking: true,
+        noParking: true,
+      })
+    ).toEqual(
+      "parking=1&parking=2&parking=3&parking=4&parking=5&parking=6&parking=7"
+    );
+  });
+  it("should return correct filter for Open House", () => {
+    expect(
+      createQueryString({ openHouseDate: new Date(1669166628291) })
+    ).toEqual("sale_date=2022-11-23");
+    expect(createQueryString({ openHouseDate: null })).toEqual("");
+    expect(createQueryString({ openHouseDate: undefined })).toEqual("");
+  });
 });

@@ -50,6 +50,33 @@ rewriteMap.set("rentAvailability", (val) =>
     ? "availabilityMode=2"
     : ""
 );
+rewriteMap.set("apartment", (val) => (val ? "housing_type=1" : ""));
+rewriteMap.set("condo", (val) => (val ? "housing_type=2" : ""));
+rewriteMap.set("cottageCabin", (val) => (val ? "housing_type=3" : ""));
+rewriteMap.set("duplex", (val) => (val ? "housing_type=4" : ""));
+rewriteMap.set("flat", (val) => (val ? "housing_type=5" : ""));
+rewriteMap.set("house", (val) => (val ? "housing_type=6" : ""));
+rewriteMap.set("inLaw", (val) => (val ? "housing_type=7" : ""));
+rewriteMap.set("loft", (val) => (val ? "housing_type=8" : ""));
+rewriteMap.set("townhouse", (val) => (val ? "housing_type=9" : ""));
+rewriteMap.set("manufactured", (val) => (val ? "housing_type=10" : ""));
+rewriteMap.set("assistedLiving", (val) => (val ? "housing_type=11" : ""));
+rewriteMap.set("land", (val) => (val ? "housing_type=12" : ""));
+rewriteMap.set("washerDryerInUnit", (val) => (val ? "laundry=1" : ""));
+rewriteMap.set("washerDryerHookups", (val) => (val ? "laundry=2" : ""));
+rewriteMap.set("laundryInBuilding", (val) => (val ? "laundry=3" : ""));
+rewriteMap.set("laundryOnSite", (val) => (val ? "laundry=4" : ""));
+rewriteMap.set("noLaundryOnSite", (val) => (val ? "laundry=5" : ""));
+rewriteMap.set("carport", (val) => (val ? "parking=1" : ""));
+rewriteMap.set("attachedGarage", (val) => (val ? "parking=2" : ""));
+rewriteMap.set("detachedGarage", (val) => (val ? "parking=3" : ""));
+rewriteMap.set("offStreetParking", (val) => (val ? "parking=4" : ""));
+rewriteMap.set("streetParking", (val) => (val ? "parking=5" : ""));
+rewriteMap.set("valetParking", (val) => (val ? "parking=6" : ""));
+rewriteMap.set("noParking", (val) => (val ? "parking=7" : ""));
+rewriteMap.set("openHouseDate", (val: any) =>
+  val ? `sale_date=${val.toISOString().substr(0, 10)}` : ""
+);
 
 /** @internal */
 export function createQueryString(filter?: object): string {
