@@ -219,6 +219,7 @@ describe("createQueryStringWithHousingFilters", () => {
       "parking=1&parking=2&parking=3&parking=4&parking=5&parking=6&parking=7"
     );
   });
+
   it("should return correct filter for Open House", () => {
     expect(
       createQueryString({ openHouseDate: new Date(1669166628291) })

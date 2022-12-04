@@ -74,7 +74,7 @@ interface OpenHouseDateFilter {
   openHouseDate?: Date;
 }
 
-export interface ApartmentsHousingForRentFilter
+export interface HousingAptsHousingFilter
   extends BasicSearchFilter,
     PriceFilter,
     BedroomsFilter,

@@ -1,4 +1,4 @@
-export type { ApartmentsHousingForRentFilter } from "./housingFilters";
+export type { HousingAptsHousingFilter } from "./housingFilters";
 export type {
   CarsAndTrucksForSaleFilter,
   BoatsForSaleFilter,

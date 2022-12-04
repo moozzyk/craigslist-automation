@@ -1,6 +1,10 @@
 import { GalleryPost } from "./types";
 import { getGalleryPosts } from "./internal";
-import { BoatsForSaleFilter, CarsAndTrucksForSaleFilter } from "./filters";
+import {
+  BoatsForSaleFilter,
+  CarsAndTrucksForSaleFilter,
+  HousingAptsHousingFilter,
+} from "./filters";
 
 export async function* forSaleBoats(
   site: string,
@@ -18,9 +22,17 @@ export async function* forSaleCarsAndTrucks(
   yield* getGalleryPosts(site, "cta", area, filter);
 }
 
+export async function* housingAptsHousing(
+  site: string,
+  filter: HousingAptsHousingFilter,
+  area?: string
+): AsyncIterableIterator<GalleryPost> {
+  yield* getGalleryPosts(site, "apa", area, filter);
+}
+
 export type {
   CarsAndTrucksForSaleFilter,
   BoatsForSaleFilter,
-  ApartmentsHousingForRentFilter,
+  HousingAptsHousingFilter,
 } from "./filters";
 export type { GalleryPost, Post } from "./types";
