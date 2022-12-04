@@ -1,4 +1,5 @@
-import { createPost, createQueryString, createUrl } from "../src/internal";
+import { createQueryString, createUrl } from "../src/internal";
+import { createPost } from "../src/types";
 import { readFile } from "node:fs/promises";
 
 describe("createQueryString", () => {
