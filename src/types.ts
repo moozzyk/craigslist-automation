@@ -1,6 +1,8 @@
 import fetch from "node-fetch";
 import { createPost } from "./internal";
 
+export type Section = "ForSale" | "Housing";
+
 export interface Post {
   url: string;
   title: string;
@@ -20,17 +22,20 @@ export class GalleryPost {
   readonly price: string | null;
   readonly datePosted: Date | null;
   readonly url: string | null;
+  readonly section: Section;
 
   constructor(
     title: string | null,
     price: string | null,
     datePosted: string | null,
-    url: string | null
+    url: string | null,
+    section: Section
   ) {
     this.title = title;
     this.price = price;
     this.datePosted = datePosted ? new Date(datePosted) : null;
     this.url = url;
+    this.section = section;
   }
 
   async getPost(): Promise<Post> {

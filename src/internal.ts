@@ -1,4 +1,4 @@
-import { GalleryPost, Post } from "./types";
+import { GalleryPost, Post, Section } from "./types";
 import * as puppeteer from "puppeteer";
 import * as cheerio from "cheerio";
 
@@ -133,7 +133,8 @@ async function extractValue(
 }
 
 async function createGalleryPost(
-  galleryCard: puppeteer.ElementHandle
+  galleryCard: puppeteer.ElementHandle,
+  section: Section
 ): Promise<GalleryPost> {
   const [url, title, date, price] = await Promise.all([
     extractValue(galleryCard, "a.titlestring", "href"),
@@ -144,16 +145,23 @@ async function createGalleryPost(
     extractValue(galleryCard, "span.priceinfo"),
   ]);
 
-  return new GalleryPost(title, price, date, url);
+  return new GalleryPost(title, price, date, url, section);
 }
 
 /** @internal */
-export async function* getGalleryPosts(
-  site: string,
-  category: string,
-  area?: string,
-  filter?: object
-): AsyncIterableIterator<GalleryPost> {
+export async function* getGalleryPosts({
+  site,
+  category,
+  area,
+  filter,
+  section,
+}: {
+  site: string;
+  category: string;
+  area?: string;
+  filter?: object;
+  section: Section;
+}): AsyncIterableIterator<GalleryPost> {
   const url = createUrl(site, category, area, filter);
   console.debug(`Gallery url: ${url}`);
   const browser = await puppeteer.launch();
@@ -164,7 +172,7 @@ export async function* getGalleryPosts(
   let galleryCards = await page.$$("div.gallery-card");
   try {
     for await (let galleryCard of galleryCards) {
-      yield await createGalleryPost(galleryCard);
+      yield await createGalleryPost(galleryCard, section);
     }
   } finally {
     browser.close();
