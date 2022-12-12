@@ -38,10 +38,10 @@ describe("createUrl", () => {
 
 describe("createPost", () => {
   it("returns valid post for full post", async () => {
-    const file = await readFile("tests/post.html");
-    const post = createPost("post.html", file.toString());
+    const file = await readFile("tests/forSalePost.html");
+    const post = createPost("forSalePost.html", file.toString(), "ForSale");
     expect(post).toEqual({
-      url: "post.html",
+      url: "forSalePost.html",
       title: "K5 Blazer (Square Body)",
       description:
         "K5 Blazer Wheeler:Complete Overhaul\n\nRebuilt 350/350/205\n14bolt full float\nDana 44",
@@ -72,9 +72,9 @@ describe("createPost", () => {
 
   it("returns valid post for bare post", async () => {
     const file = await readFile("tests/barepost.html");
-    const post = createPost("post.html", file.toString());
+    const post = createPost("barepost.html", file.toString(), "ForSale");
     expect(post).toEqual({
-      url: "post.html",
+      url: "barepost.html",
       title: "K5 Blazer",
       datePosted: new Date("2022-10-21T13:58:19.000Z"),
       dateUpdated: new Date("2022-11-05T23:27:05.000Z"),

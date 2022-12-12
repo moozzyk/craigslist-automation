@@ -45,18 +45,38 @@ export class GalleryPost {
 
     const resp = await fetch(this.url);
     // TODO: handle errors
-    return createPost(this.url, await resp.text());
+    return createPost(this.url, await resp.text(), this.section);
   }
 }
 
-function getPostData($: cheerio.CheerioAPI): any {
+interface PostData {
+  title: string;
+  price?: number;
+  currency?: string;
+  city?: string;
+  state?: string;
+  images?: string[];
+}
+
+function getPostData($: cheerio.CheerioAPI, section: Section): PostData {
   let postDataText = $("script#ld_posting_data").text();
-  if (postDataText.length === 0) {
+  if (!postDataText || postDataText.length === 0) {
     return {
       title: $("#titletextonly").text(),
     };
   }
-  let postData: any = JSON.parse(postDataText);
+  switch (section) {
+    case "ForSale":
+      return getForSalePostData($);
+    case "Housing":
+      return getHousingPostData($);
+    default:
+      throw new Error("Unsupported section: " + section);
+  }
+}
+
+function getForSalePostData($: cheerio.CheerioAPI): PostData {
+  let postData: any = JSON.parse($("script#ld_posting_data").text());
   return {
     title: postData.name,
     price: postData.offers?.price,
@@ -64,6 +84,24 @@ function getPostData($: cheerio.CheerioAPI): any {
     city: postData.offers?.availableAtOrFrom?.address?.addressLocality,
     state: postData.offers?.availableAtOrFrom?.address?.addressRegion,
     images: postData.image || [],
+  };
+}
+
+function getHousingPostData($: cheerio.CheerioAPI): PostData {
+  let postData: any = JSON.parse($("script#ld_posting_data").text());
+  let priceStr = $("span.price").text();
+  let currency = priceStr[0] === "$" ? "USD" : null;
+  let price = Number(priceStr.replace(/[^.\d]/g, ""));
+  let images = $("a.thumb")
+    .map((_i, x) => $(x).attr("href"))
+    .toArray();
+  return {
+    title: postData.name,
+    ...(price && { price }),
+    ...(currency && { currency }),
+    city: postData.address?.addressLocality,
+    state: postData.address?.addressRegion,
+    images,
   };
 }
 
@@ -110,12 +148,16 @@ function getItemDescription($: cheerio.CheerioAPI): string {
 }
 
 /** @internal */
-export function createPost(postUrl: string, postText: string): Post {
+export function createPost(
+  postUrl: string,
+  postText: string,
+  section: Section
+): Post {
   const $ = cheerio.load(postText);
   let attributes = getAttributes($);
   let post = <Post>{
     url: postUrl,
-    ...getPostData($),
+    ...getPostData($, section),
     description: getItemDescription($),
     ...getPostDates($),
     ...(Object.entries(attributes).length > 0 && { attributes: attributes }),
