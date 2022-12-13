@@ -139,7 +139,7 @@ async function createGalleryPost(
     extractValue(galleryCard, "a.titlestring", "href"),
     extractValue(galleryCard, "a.titlestring"),
     galleryCard
-      .$("span.when")
+      .$("div.meta")
       .then((e) => (e ? extractValue(e, "span", "title") : null)),
     extractValue(galleryCard, "span.priceinfo"),
   ]);
