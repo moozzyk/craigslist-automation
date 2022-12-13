@@ -14,7 +14,14 @@ npm i craigslist-automation
 
 ## Usage
 
-Each supported Craigslist category has a corresponding function returning posts in this category (e.g. to fetch posts from the _for sale cars+trucks_ category use `forSaleCarsAndTrucks`). The function takes the site, a [filter](https://github.com/moozzyk/craigslist-automation/blob/main/src/filters.ts) and, optionally, the area. The filter allows specifying only criteria that are valid for the given category - for example the `CarsAndTrucksForSaleFilter` should only be used to filter posts from the _for sale cars+trucks_ category. The function will return a list of gallery posts containing basic details and the `getPost()` method that allows to fetch all post details.
+Each supported Craigslist category has a corresponding function returning posts in this category (e.g. to fetch posts from the _for sale cars+trucks_ category use `forSaleCarsAndTrucks`). The function takes the site, a [filter](https://github.com/moozzyk/craigslist-automation/blob/main/src/index.ts#L3-L7) and, optionally, the area. The filter allows specifying only criteria that are valid for the given category - for example the `CarsAndTrucksForSaleFilter` should only be used to filter posts from the _for sale cars+trucks_ category. The function will return a list of gallery posts containing basic details and the `getPost()` method that allows to fetch all post details.
+
+## Supported Categories/Filters
+- For Sale
+  - `CarsAndTrucksForSaleFilter`
+  - `BoatsForSaleFilter`
+- Housing 
+  - `HousingAptsHousingFilter`
 
 ## Examples
 
