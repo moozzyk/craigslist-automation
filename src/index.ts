@@ -1,4 +1,4 @@
-import { GalleryPost, Section } from "./types";
+import { GalleryPost } from "./types";
 import { getGalleryPosts } from "./internal";
 import {
   BoatsForSaleFilter,
