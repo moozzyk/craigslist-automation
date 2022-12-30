@@ -161,7 +161,7 @@ function getAttributes($: cheerio.CheerioAPI): Record<string, string> {
 
 function getMiscDetails($: cheerio.CheerioAPI): string[] {
   let attrGroups = $("p.attrgroup");
-  let attributes = $("span", attrGroups);
+  let attributes = $("span:not(.otherpostings)", attrGroups);
   return attributes
     .map((_, e) => $(e).text())
     .toArray()
