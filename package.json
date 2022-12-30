@@ -2,6 +2,13 @@
   "name": "craigslist-automation",
   "version": "0.0.4",
   "description": "Programmatic access to craigslist posts.",
+  "keywords": [
+    "craigslist",
+    "node",
+    "typescript",
+    "search",
+    "api"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
