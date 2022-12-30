@@ -51,6 +51,7 @@ describe("createPost", () => {
       state: "WA",
       datePosted: new Date("2022-11-02T03:07:31.000Z"),
       dateUpdated: new Date("2022-11-02T03:07:32.000Z"),
+      miscDetails: ["1986 chevrolet k5 blazer"],
       images: [
         "https://images.craigslist.org/00707_4SxHHnZZYVDz_0CI0t2_600x450.jpg",
         "https://images.craigslist.org/00V0V_eELSOhgQhphz_0CI0t2_600x450.jpg",

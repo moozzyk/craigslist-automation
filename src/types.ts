@@ -15,6 +15,7 @@ export interface Post {
   dateUpdated?: Date;
   images?: string[];
   attributes?: Record<string, string>;
+  miscDetails?: string[];
 
   numberOfBedrooms?: number;
   numberOfBathrooms?: number;
@@ -158,6 +159,16 @@ function getAttributes($: cheerio.CheerioAPI): Record<string, string> {
   );
 }
 
+function getMiscDetails($: cheerio.CheerioAPI): string[] {
+  let attrGroups = $("p.attrgroup");
+  let attributes = $("span", attrGroups);
+  return attributes
+    .map((_, e) => $(e).text())
+    .toArray()
+    .filter((s) => !s.includes(":"))
+    .map((s) => s.trim());
+}
+
 function getItemDescription($: cheerio.CheerioAPI): string {
   let postBody = $("#postingbody").clone();
   postBody.find("div.print-qrcode-container").remove();
@@ -172,12 +183,14 @@ export function createPost(
 ): Post {
   const $ = cheerio.load(postText);
   let attributes = getAttributes($);
+  let miscDetails = getMiscDetails($);
   let post = <Post>{
     url: postUrl,
     ...getPostData($, section),
     description: getItemDescription($),
     ...getPostDates($),
     ...(Object.entries(attributes).length > 0 && { attributes: attributes }),
+    ...(miscDetails.length > 0 && { miscDetails }),
   };
 
   return post;

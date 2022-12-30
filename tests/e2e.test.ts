@@ -19,6 +19,8 @@ describe("forSaleCarAndTrucks", () => {
       expect(post.price).toBeTruthy();
       expect(post.currency).toBeTruthy();
       expect(post.datePosted).toBeTruthy();
+      expect(post.attributes).toBeTruthy();
+      expect(post.miscDetails).toBeTruthy();
       expect((post.images ?? []).length).toBeGreaterThan(0);
       break;
     }
@@ -47,6 +49,8 @@ describe("housingAptsHousing", () => {
       expect(post.price).toBeTruthy();
       expect(post.currency).toBeTruthy();
       expect(post.datePosted).toBeTruthy();
+      expect(post.attributes).toBeTruthy();
+      expect(post.miscDetails).toBeTruthy();
       expect((post.images ?? []).length).toBeGreaterThan(0);
       expect(post.numberOfBedrooms).toBeGreaterThan(0);
       expect(post.numberOfBathrooms).toBeGreaterThan(0);
