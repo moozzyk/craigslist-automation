@@ -15,6 +15,11 @@ export interface Post {
   dateUpdated?: Date;
   images?: string[];
   attributes?: Record<string, string>;
+
+  numberOfBedrooms?: number;
+  numberOfBathrooms?: number;
+  petsAllowed?: Boolean;
+  smokingAllowed?: Boolean;
 }
 
 export class GalleryPost {
@@ -56,6 +61,10 @@ interface PostData {
   city?: string;
   state?: string;
   images?: string[];
+  numberOfBedrooms?: number;
+  numberOfBathrooms?: number;
+  petsAllowed?: Boolean;
+  smokingAllowed?: Boolean;
 }
 
 function getPostData($: cheerio.CheerioAPI, section: Section): PostData {
@@ -102,6 +111,14 @@ function getHousingPostData($: cheerio.CheerioAPI): PostData {
     city: postData.address?.addressLocality,
     state: postData.address?.addressRegion,
     images,
+    ...(!isNaN(parseInt(postData.numberOfBedrooms)) && {
+      numberOfBedrooms: parseInt(postData.numberOfBedrooms),
+    }),
+    ...(!isNaN(parseInt(postData.numberOfBathroomsTotal)) && {
+      numberOfBathrooms: parseInt(postData.numberOfBathroomsTotal),
+    }),
+    ...(postData.petsAllowed && { petsAllowed: postData.petsAllowed }),
+    ...(postData.smokingAllowed && { smokingAllowed: postData.smokingAllowed }),
   };
 }
 
