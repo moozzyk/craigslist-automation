@@ -24,7 +24,25 @@ Each supported Craigslist category has a corresponding function returning posts 
   - `HousingAptsHousingFilter`
 
 ## Examples
+### Apts/Housing 
+```ts
+import { housingAptsHousing, GalleryPost } from "craigslist-automation";
 
+(async () => {
+  for await (let galleryPost of housingAptsHousing("seattle", {
+      minBedrooms: 1,
+      maxBathrooms: 3,
+      minSqFt: 300,
+      hasImage: true,
+    })) {
+    console.log(galleryPost);
+    const post = await galleryPost.getPost();
+    console.log(post);
+  }
+})();
+```
+
+### For Sale Cars+Truck
 ```ts
 import { forSaleCarsAndTrucks, GalleryPost } from "craigslist-automation";
 
