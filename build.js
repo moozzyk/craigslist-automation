@@ -14,6 +14,7 @@ const base = {
     Object.keys(peerDependencies ?? {})
   ),
   platform: "node",
+  minify: true,
 };
 
 build({
