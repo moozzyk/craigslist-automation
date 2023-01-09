@@ -58,3 +58,12 @@ import { forSaleCarsAndTrucks, GalleryPost } from "craigslist-automation";
     console.log(post);
   }
 })();
+```
+
+## Notes
+
+### Raspberry Pi
+
+I was able to run this on Raspberry Pi (Raspbian GNU/Linux 11 (bullseye)) after taking the following steps:
+- installing Chromium: `sudo apt install chromium`
+- setting the `PUPPETEER_EXECUTABLE_PATH` environment variable to point to chromium (e.g. `PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium`)
