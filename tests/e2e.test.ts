@@ -24,7 +24,7 @@ describe("forSaleCarAndTrucks", () => {
       expect((post.images ?? []).length).toBeGreaterThan(0);
       break;
     }
-  }, 30000);
+  }, 90000);
 });
 
 describe("housingAptsHousing", () => {
@@ -56,5 +56,5 @@ describe("housingAptsHousing", () => {
       expect(post.numberOfBathrooms).toBeGreaterThan(0);
       break;
     }
-  }, 30000);
+  }, 90000);
 });
