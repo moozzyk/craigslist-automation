@@ -1,4 +1,4 @@
-import { GalleryPost, Post, Section } from "./types";
+import { GalleryPost, Section } from "./types";
 import * as puppeteer from "puppeteer";
 
 const zipRegex = /^\d{5}$/;
