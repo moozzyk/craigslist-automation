@@ -163,7 +163,13 @@ export async function* getGalleryPosts({
 }): AsyncIterableIterator<GalleryPost> {
   const url = createUrl(site, category, area, filter);
   console.debug(`Gallery url: ${url}`);
-  const browser = await puppeteer.launch();
+  let launchOptions: puppeteer.PuppeteerLaunchOptions | undefined = undefined;
+  if (process.env.CLA_PUPPETEER_LAUNCH_ARGS) {
+    launchOptions = {
+      args: process.env.CLA_PUPPETEER_LAUNCH_ARGS.split(" "),
+    };
+  }
+  const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
   await page.goto(url, {
     waitUntil: "networkidle0",
