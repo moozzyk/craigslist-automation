@@ -174,7 +174,7 @@ export async function* getGalleryPosts({
   await page.goto(url, {
     waitUntil: "networkidle0",
   });
-  let galleryCards = await page.$$("div.gallery-card");
+  let galleryCards = await page.$$("li.cl-search-result");
   try {
     for await (let galleryCard of galleryCards) {
       yield await createGalleryPost(galleryCard, section);
