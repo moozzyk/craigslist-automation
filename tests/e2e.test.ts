@@ -9,12 +9,14 @@ describe("forSaleCarAndTrucks", () => {
       purveyor: "owner",
     })) {
       galleryPostReceived = true;
+      console.log(galleryPost);
       expect(galleryPost.title).toBeTruthy();
       expect(galleryPost.price).toBeTruthy();
       expect(galleryPost.url).toBeTruthy();
       expect(galleryPost.datePosted).toBeTruthy();
 
       const post = await galleryPost.getPost();
+      console.log(post);
       expect(post.url).toEqual(galleryPost.url);
       expect(post.title).toBeTruthy();
       expect(post.description).toBeTruthy();

@@ -39,7 +39,7 @@ export class GalleryPost {
   ) {
     this.title = title;
     this.price = price;
-    this.datePosted = datePosted ? new Date(datePosted) : null;
+    this.datePosted = this.parseClDateString(datePosted);
     this.url = url;
     this.section = section;
   }
@@ -52,6 +52,32 @@ export class GalleryPost {
     const resp = await fetch(this.url);
     // TODO: handle errors
     return createPost(this.url, await resp.text(), this.section);
+  }
+
+  private parseClDateString(clDateString: string | null): Date | null {
+    if (clDateString === null) {
+      return null;
+    }
+    let matches = clDateString.match(/(\d+) ?(min|hr)/);
+    if (matches !== null) {
+      let ms = 1000 * 60 * (matches[2] === "min" ? 1 : 60);
+      return new Date(Date.now() - parseInt(matches[1]) * ms);
+    }
+
+    matches = clDateString.match(/(\d+)\/(\d+)/);
+    if (matches !== null) {
+      let month = parseInt(matches[1]);
+      let day = parseInt(matches[2]);
+      let now = new Date();
+      let year =
+        month > now.getMonth() + 1 ||
+        (month == now.getMonth() + 1 && day > now.getDate())
+          ? now.getFullYear() - 1
+          : now.getFullYear();
+      return new Date(year, month - 1, day);
+    }
+
+    return null;
   }
 }
 
