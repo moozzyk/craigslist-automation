@@ -1,6 +1,6 @@
 {
   "name": "craigslist-automation",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Programmatic access to craigslist posts.",
   "keywords": [
     "craigslist",
