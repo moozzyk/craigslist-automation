@@ -136,8 +136,8 @@ async function createGalleryPost(
   section: Section
 ): Promise<GalleryPost> {
   const [url, title, date, price] = await Promise.all([
-    extractValue(galleryCard, "a.titlestring", "href"),
-    extractValue(galleryCard, "a.titlestring"),
+    extractValue(galleryCard, "a.posting-title", "href"),
+    extractValue(galleryCard, "a.posting-title"),
     extractValue(galleryCard, "div.meta"),
     extractValue(galleryCard, "span.priceinfo"),
   ]);
